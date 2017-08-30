@@ -8,18 +8,15 @@ var connection = mysql.createConnection({
   database : 'QuotesApi'
 });
 
-
-  
-
 exports.list_all_quotes = function(req, res) {
   console.log('list_all_quotes');
-  connection.connect()
+  //connection.connect()
   connection.query('SELECT * FROM Quotes', function (err, rows, fields) {
     if (err)
       res.send(err);
     res.json(rows);
   })
-  connection.end()
+ // connection.end()
 };
 
 exports.create_a_quote = function(req, res) {
@@ -33,11 +30,12 @@ exports.create_a_quote = function(req, res) {
 
 
 exports.read_a_quote = function(req, res) {
-  Task.findById(req.params.taskId, function(err, task) {
+  console.log('read_a_quote: ' + req.params.quoteId);
+  connection.query('SELECT * FROM Quotes WHERE QuoteId = ?', req.params.quoteId, function (err, rows, fields) {
     if (err)
       res.send(err);
-    res.json(task);
-  });
+    res.json(rows);
+  })
 };
 
 
@@ -51,8 +49,6 @@ exports.update_a_quote = function(req, res) {
 
 
 exports.delete_a_quote = function(req, res) {
-
-
   Task.remove({
     _id: req.params.taskId
   }, function(err, task) {

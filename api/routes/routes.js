@@ -8,7 +8,7 @@ module.exports = function(app) {
     .post(quoteController.create_a_quote);
 
 
-  app.route('/quotes/:taskId')
+  app.route('/quotes/:quoteId')
     .get(quoteController.read_a_quote)
     .put(quoteController.update_a_quote)
     .delete(quoteController.delete_a_quote);
